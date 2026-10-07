@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SDLC Mission Control team configuration",
+  "type": "object",
+  "required": ["schemaVersion", "team", "repositories"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "team": {
+      "type": "object",
+      "required": ["id", "azureDevOps", "taskPlanning"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "azureDevOps": {
+          "type": "object",
+          "required": ["organizationUrl", "project", "team", "workItemTypes", "eligibleStates", "includeAttachments", "includeLinkedWorkItems", "userStoryCompletion"],
+          "properties": {
+            "organizationUrl": { "type": "string", "format": "uri" },
+            "project": { "type": "string", "minLength": 1 },
+            "team": { "type": "string", "minLength": 1 },
+            "workItemTypes": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+            "eligibleStates": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+            "includeAttachments": { "type": "boolean" },
+            "includeLinkedWorkItems": { "type": "boolean" },
+            "userStoryCompletion": { "const": "never" }
+          }
+        },
+        "taskPlanning": {
+          "type": "object",
+          "required": ["developerApprovalRequired", "autoStartMissionAfterApproval", "developerAlias", "featureBranchPattern"],
+          "properties": {
+            "developerApprovalRequired": { "const": true },
+            "autoStartMissionAfterApproval": { "const": false },
+            "developerAlias": { "type": "string", "pattern": "^[A-Za-z0-9._-]+$" },
+            "featureBranchPattern": { "type": "string", "pattern": "^feature/.*\\{developer\\}.*\\{workItemId\\}" },
+            "scopeMinimalityReviewEnabled": {
+              "type": "boolean",
+              "description": "Optional, defaults to false. Spawns a second model for a holistic cross-model review (with auto-revision) when every selected repository comes back changes-required. Off by default: it's the heaviest and most expensive automatic review pass."
+            },
+            "versionBump": {
+              "type": "object",
+              "description": "Optional. When set, any repository containing `file` must have `field` incremented alongside other code changes during Develop. Absent = feature off.",
+              "required": ["file", "field"],
+              "additionalProperties": false,
+              "properties": {
+                "file": { "type": "string", "minLength": 1 },
+                "field": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "repositories": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "scm", "localPath", "remoteUrl", "integrationBranch"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "scm": { "enum": ["azure-devops", "gitlab"] },
+          "localPath": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Absolute path to the local checkout of this repository."
+          },
+          "remoteUrl": { "type": "string", "format": "uri" },
+          "integrationBranch": { "type": "string", "minLength": 1 },
+          "contractFunctions": {
+            "type": "array",
+            "description": "Optional. Functions in this repository whose current behavior decides whether a story is genuinely in scope here (e.g. a dispatch/selection function), as opposed to any other line in the same file. Used to require that a planner's scope-inclusion evidence actually addresses the deciding logic, not just any citation in the right file. Team-specific; leave empty for repositories with no such known pattern.",
+            "items": {
+              "type": "object",
+              "required": ["filePath", "functionName"],
+              "properties": {
+                "filePath": { "type": "string", "minLength": 1, "description": "Repository-relative path to the file containing the function." },
+                "functionName": { "type": "string", "minLength": 1, "description": "Name of the function/method whose definition decides scope." }
+              }
+            }
+          },
+          "scopeAnchors": {
+            "type": "array",
+            "description": "Optional. Team-configured registry, allowlist, or documentation extension points that decide whether a new named capability requires a local additive change. The marker must identify the current baseline pattern in the configured file.",
+            "items": {
+              "type": "object",
+              "required": ["kind", "filePath", "marker", "description"],
+              "properties": {
+                "kind": { "enum": ["registry", "allowlist", "documentation-pattern"] },
+                "filePath": { "type": "string", "minLength": 1, "description": "Repository-relative path containing the extension point." },
+                "marker": { "type": "string", "minLength": 1, "description": "Exact current-source marker identifying the extension point." },
+                "description": { "type": "string", "minLength": 1, "description": "What this extension point owns." }
+              }
+            }
+          },
+          "verification": {
+            "type": "object",
+            "description": "Optional stable repository verification policy. Do not list tests created by an individual mission here; those belong in that approved plan.",
+            "properties": {
+              "commands": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["command", "phases"],
+                  "properties": {
+                    "command": { "type": "string", "minLength": 1 },
+                    "phases": { "type": "array", "minItems": 1, "items": { "enum": ["baseline", "post-change"] }, "uniqueItems": true },
+                    "timeoutSeconds": { "type": "integer", "minimum": 10, "maximum": 600 }
+                  }
+                }
+              },
+              "excludeDetectedCommands": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+              "manualOnlyCommands": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["command", "reason"],
+                  "properties": {
+                    "command": { "type": "string", "minLength": 1 },
+                    "reason": { "type": "string", "minLength": 1 }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

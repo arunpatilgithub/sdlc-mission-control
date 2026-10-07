@@ -1,0 +1,16 @@
+{
+  "$schema": "./allowed-fetch-domains.schema.json",
+  "schemaVersion": 1,
+  "hostnames": [
+    "ads-api.reddit.com",
+    "api.pinterest.com",
+    "business-api.tiktok.com",
+    "business.reddithelp.com",
+    "developers.facebook.com",
+    "developers.openai.com",
+    "developers.pinterest.com",
+    "developers.snap.com",
+    "graph.facebook.com",
+    "tr.snapchat.com"
+  ]
+}

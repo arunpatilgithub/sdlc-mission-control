@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.env
+*.log
+runtime/
+.DS_Store
+.idea/
+docs/
+
+# Team-specific config — copy team-config.example.json and fill in your values
+config/team-config.json
+
+# Repository knowledgebase entries — machine-specific, do not commit
+# Add your own .json files here; the my-service.example.json is a template only
+config/knowledgebase/repositories/*.json
+!config/knowledgebase/repositories/*.example.json
+
+# Recorded mission replay fixtures — contain real story and codebase data
+src/agent/__fixtures__/recorded/

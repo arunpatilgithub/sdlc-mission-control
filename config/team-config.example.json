@@ -1,0 +1,40 @@
+{
+  "$schema": "./team-config.schema.json",
+  "schemaVersion": 1,
+  "team": {
+    "id": "my-team",
+    "azureDevOps": {
+      "organizationUrl": "https://dev.azure.com/your-org",
+      "project": "YourProject",
+      "team": "YourTeam",
+      "workItemTypes": ["User Story"],
+      "eligibleStates": ["New", "Active", "Ready for Development"],
+      "includeAttachments": true,
+      "includeLinkedWorkItems": true,
+      "userStoryCompletion": "never"
+    },
+    "taskPlanning": {
+      "developerApprovalRequired": true,
+      "autoStartMissionAfterApproval": false,
+      "developerAlias": "your-alias",
+      "featureBranchPattern": "feature/{developer}/{workItemId}",
+      "scopeMinimalityReviewEnabled": false
+    }
+  },
+  "repositories": [
+    {
+      "id": "MyService.API",
+      "scm": "azure-devops",
+      "localPath": "/absolute/path/to/your/checkout/MyService.API",
+      "remoteUrl": "https://dev.azure.com/your-org/YourProject/_git/MyService.API",
+      "integrationBranch": "main"
+    },
+    {
+      "id": "MyService.Worker",
+      "scm": "azure-devops",
+      "localPath": "/absolute/path/to/your/checkout/MyService.Worker",
+      "remoteUrl": "https://dev.azure.com/your-org/YourProject/_git/MyService.Worker",
+      "integrationBranch": "main"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "kind": "repository-knowledge",
+  "status": "seeded",
+  "repositoryId": "MyService.API",
+  "entries": [
+    {
+      "id": "entry-point-is-handler",
+      "status": "seeded",
+      "category": "ownership",
+      "guidance": "The primary entry point for inbound requests is Handler.js. Begin scope analysis there before looking at downstream services.",
+      "sourceEvidence": [
+        "src/Handler.js"
+      ],
+      "revalidateWhen": "The routing or entry-point structure changes."
+    },
+    {
+      "id": "prefer-existing-patterns",
+      "status": "seeded",
+      "category": "implementation-pattern",
+      "guidance": "Reuse the nearest same-kind existing implementation rather than introducing a new abstraction. Check for an existing pattern before proposing a new one.",
+      "sourceEvidence": [],
+      "revalidateWhen": "A new canonical pattern is established in the codebase."
+    }
+  ]
+}

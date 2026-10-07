@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "kind": "harness-knowledge",
+  "status": "seeded",
+  "entries": [
+    {
+      "id": "execution-dossier-is-the-develop-handoff",
+      "status": "seeded",
+      "category": "planning-to-develop",
+      "guidance": "Planning must hand Develop exact approved paths, unique baseline edit anchors, required final-source fragments, and validation commands. Develop should implement that dossier rather than rediscovering the repository.",
+      "revalidateWhen": "The execution-dossier contract or Develop-agent protocol changes."
+    },
+    {
+      "id": "source-verifiable-questions-do-not-block",
+      "status": "seeded",
+      "category": "planning-decision",
+      "guidance": "A question about current source behavior, template substitution, routing, validation commands, or an existing convention belongs to focused read-only discovery. It is not developer input before Develop.",
+      "revalidateWhen": "A new decision class is introduced or the planning contract changes."
+    },
+    {
+      "id": "only-repository-boundary-uncertainty-may-gate",
+      "status": "seeded",
+      "category": "planning-decision",
+      "guidance": "An executable plan may pause only for a genuine unresolved decision about whether a selected repository is on the implementation path. Implementation and operational uncertainty must be resolved in the plan or recorded after Develop.",
+      "revalidateWhen": "Repository-selection semantics or approval gates change."
+    },
+    {
+      "id": "developer-decisions-are-durable-constraints",
+      "status": "seeded",
+      "category": "plan-revision",
+      "guidance": "Retain an answered developer decision by stable affected-fact identity, carry it into every replan, and reject a reworded recurrence. Never rely on prompt wording alone to preserve a decision.",
+      "revalidateWhen": "The decision-register schema or revision workflow changes."
+    },
+    {
+      "id": "focused-discovery-precedes-broad-search",
+      "status": "seeded",
+      "category": "planning-efficiency",
+      "guidance": "Start with the best likely implementation file, inspect the nearest analogous implementation, then follow only direct dependencies needed to establish ownership or the exact edit. Observer and reporting code are out of bounds unless an acceptance criterion requires them.",
+      "revalidateWhen": "Preflight ranking or repository-scout protocol changes."
+    },
+    {
+      "id": "develop-worktrees-are-disposable",
+      "status": "seeded",
+      "category": "develop-safety",
+      "guidance": "Only Develop writes target-repository files, inside its disposable worktree. A reviewed local commit may later be published, but mission worktrees must retain the disabled push remote and must never be treated as a developer checkout.",
+      "revalidateWhen": "Worktree creation, cleanup, or Publish behavior changes."
+    },
+    {
+      "id": "validation-environment-is-not-an-agent-edit",
+      "status": "seeded",
+      "category": "develop-validation",
+      "guidance": "A missing local build executable or dependency installation is a validation-environment condition. Do not expand the source diff with package or test-script changes merely to compensate; report the condition and use the repository's approved dependency provisioning path.",
+      "revalidateWhen": "Repository validation policy or dependency provisioning changes."
+    },
+    {
+      "id": "show-stage-operations-and-duration",
+      "status": "seeded",
+      "category": "user-experience",
+      "guidance": "Develop status should show durable operations such as isolated-worktree creation, baseline validation, implementation, post-change validation, local commit, deterministic gates, and review, with per-operation and per-repository duration. Do not expose raw prompts, secrets, or unrestricted command output.",
+      "revalidateWhen": "Develop lifecycle operations or dashboard privacy rules change."
+    },
+    {
+      "id": "planning-contract-fails-closed",
+      "status": "seeded",
+      "category": "safety",
+      "guidance": "If a plan lacks a valid repository write boundary, execution dossier, or required test assertions, do not expose it for approval or Develop. Repair the planning contract read-only or fail visibly; never infer missing writes at Develop time.",
+      "revalidateWhen": "Plan-contract validation or approval behavior changes."
+    }
+  ]
+}
